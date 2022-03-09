@@ -1,0 +1,112 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Link from 'react-router-dom/Link';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  Button,
+  Headline,
+  Pane,
+  Paneset,
+  MultiColumnList,
+  Icon,
+} from '@folio/stripes/components';
+
+/*
+  STRIPES-NEW-APP
+  This page contains some simple examples to illustrate getting started
+  with some stripes-components and your app's own components
+*/
+
+export default class RequestList extends React.Component {
+  static propTypes = {
+    resources: PropTypes.shape({
+      requests: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.any,
+/*        records: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          item: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            barcode: PropTypes.string.isRequired,
+            location: PropTypes.shape({
+              code: PropTypes.string.isRequired,
+              name:  PropTypes.string.isRequired
+            }),
+            callNumberComponents: PropTypes.shape({
+              prefix: PropTypes.string.isRequired,
+              callNumber: PropTypes.string.isRequired,
+            })
+          })
+        }))*/
+      })
+    }).isRequired
+  }
+
+  static manifest = Object.freeze({
+    requests: {
+      type: 'okapi',
+      path: 'circulation/requests?query=%28status%3D%3D%22Open%20-%20Not%20yet%20filled%22%20and%20requestType%3D%3D%22Page%22%29%20sortby%20requestDate'
+    }
+  });
+
+  constructor(props) {
+    super(props);
+    console.log("0", this);
+  }
+
+  renderRequestList() {
+    return (
+      <MultiColumnList contentData={this.buildRequestListRows()}>
+      </MultiColumnList>
+    );
+  }
+
+  buildRequestListRows() {
+    const csp = this.determineCurrentServicePoint();
+    const requests = this.props.resources.requests.records[0].requests.filter(request => !csp || request.item.location.code == csp);
+    console.log("b", requests);
+
+    return requests.map((request) => {
+      return {
+        callNumber: this.formatCallNumber(request.item.callNumberComponents),
+        title: request.item.title,
+        barcode: request.item.barcode,
+        pickupServicePoint: request.pickupServicePoint.name,
+      }
+    });
+  }
+  
+  determineCurrentServicePoint() {
+    const pn = this.props.location.pathname;
+    return pn.startsWith('/stackrequests/') ? pn.substring(15) : '';
+  }
+
+  formatCallNumber(cnc) {
+    console.log("d", cnc);
+    return ( 
+        (cnc.prefix ? cnc.prefix + '/' : '')
+      + cnc.callNumber
+      + (cnc.suffix ? ' ' + cnc.suffix : '')
+    );
+  }
+
+  render() {
+    const { health, requests } = this.props.resources;
+    const healthResourceAvaliable = health && health.hasLoaded;
+    const requestsAvailable = requests && requests.hasLoaded; 
+    console.log("a", requestsAvailable, requests);
+
+    return (
+      <Paneset static>
+        <Pane defaultWidth="100%" paneTitle="List of Requests">
+          {requestsAvailable
+            ? this.renderRequestList()
+            : <Icon icon="spinner-ellipsis" />
+          }
+        </Pane>
+      </Paneset>
+    );
+  }
+}
+

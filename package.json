@@ -1,0 +1,79 @@
+{
+  "name": "@folio/stack-requests",
+  "version": "1.1.0",
+  "description": "Display a list of unprocessed requests for a given stack and allow for changing processed status",
+  "main": "src/index.js",
+  "repository": "",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=12.20.1"
+  },
+  "scripts": {
+    "start": "stripes serve",
+    "build": "stripes build --output ./output",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-stack-requests ./translations/ui-stack-requests/compiled",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/eslint-parser": "^7.15.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.9.0",
+    "@folio/eslint-config-stripes": "^6.0.0",
+    "@folio/stripes": "^7.0.0",
+    "@folio/stripes-cli": "^2.5.0 || ^2.4.0",
+    "@folio/stripes-core": "^8.0.0",
+    "@formatjs/cli": "^4.2.29",
+    "@jest/globals": "^26.6.2",
+    "@testing-library/dom": "^7.26.3",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.1.10",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "chai": "^4.2.0",
+    "core-js": "^3.6.4",
+    "eslint": "^7.32.0",
+    "inflected": "^2.0.4",
+    "jest": "^26.6.3",
+    "jest-canvas-mock": "^2.3.0",
+    "jest-junit": "^12.0.0",
+    "mocha": "^5.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-intl": "^5.8.0",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.1.2",
+    "regenerator-runtime": "^0.13.3"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "@folio/stripes": "^7.0.0",
+    "react": "*",
+    "react-intl": "^5.8.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "stripes": {
+    "actsAs": [
+      "app"
+    ],
+    "displayName": "ui-stack-requests.meta.title",
+    "route": "/stackrequests",
+    "okapiInterfaces": {},
+    "permissionSets": [
+      {
+        "permissionName": "module.stack-requests.enabled",
+        "displayName": "UI: Stack Requests module is enabled",
+        "visible": true
+      }
+    ]
+  }
+}
