@@ -37,7 +37,7 @@ class StackRequests extends React.Component {
     return (
       <Switch>
         <Route exact path={path} component={this.connectedRequestList} />
-        <Route path={`${path}/:loc?`} component={this.connectedRequestList}>
+        <Route path={`${path}/:sp?`} component={this.connectedRequestList}>
         </Route>
       </Switch>
     );

@@ -67,6 +67,11 @@
     ],
     "displayName": "ui-stack-requests.meta.title",
     "route": "/stackrequests",
+    "icons": [{
+      "name": "app",
+      "alt": "Stack Requests",
+      "title": "Stack Requests"
+    }],
     "okapiInterfaces": {},
     "permissionSets": [
       {

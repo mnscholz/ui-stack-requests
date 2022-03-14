@@ -12,10 +12,7 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
-/*
-  STRIPES-NEW-APP
-  This page contains some simple examples to illustrate getting started
-  with some stripes-components and your app's own components
+/* Request List component that renders
 */
 
 export default class RequestList extends React.Component {
@@ -24,29 +21,31 @@ export default class RequestList extends React.Component {
       requests: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.any,
-/*        records: PropTypes.arrayOf(PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          item: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            barcode: PropTypes.string.isRequired,
-            location: PropTypes.shape({
-              code: PropTypes.string.isRequired,
-              name:  PropTypes.string.isRequired
-            }),
-            callNumberComponents: PropTypes.shape({
-              prefix: PropTypes.string.isRequired,
-              callNumber: PropTypes.string.isRequired,
-            })
-          })
-        }))*/
-      })
-    }).isRequired
+      }),
+      locations: PropTypes.object,
+    }).isRequired,
+    mutator: PropTypes.shape({
+      checkIn: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+    }).isRequired, 
   }
 
   static manifest = Object.freeze({
     requests: {
       type: 'okapi',
       path: 'circulation/requests?query=%28status%3D%3D%22Open%20-%20Not%20yet%20filled%22%20and%20requestType%3D%3D%22Page%22%29%20sortby%20requestDate'
+    },
+    checkIn: {
+      type: 'okapi',
+      path: '/circulation/check-in-by-barcode',
+      /* cf. Scan.js in Checkin app */
+      fetch: false,
+      throwErrors: false,
+    },
+    locations: {
+      type: 'okapi',
+      path: '/locations?query=servicePointIds=="*\\":{sp:-}\\"*"',
     }
   });
 
@@ -73,6 +72,8 @@ export default class RequestList extends React.Component {
         title: request.item.title,
         barcode: request.item.barcode,
         pickupServicePoint: request.pickupServicePoint.name,
+        //checkin: <Button>Checkin</Button>,
+        checkin: <Button onClick={() => this.checkIn(request.item.barcode)} >Checkin</Button>,
       }
     });
   }
@@ -89,6 +90,10 @@ export default class RequestList extends React.Component {
       + cnc.callNumber
       + (cnc.suffix ? ' ' + cnc.suffix : '')
     );
+  }
+
+  checkIn(barcode) {
+    alert(`Checking in ${barcode}`); 
   }
 
   render() {
