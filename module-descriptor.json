@@ -1,0 +1,13 @@
+{
+  "id": "fauub_stack-requests-1.1.0",
+  "name": "Display a list of unprocessed requests for a given stack and allow for changing processed status",
+  "permissionSets": [
+    {
+      "permissionName": "module.stack-requests.enabled",
+      "displayName": "UI: Stack Requests module is enabled",
+      "visible": true
+    }
+  ],
+  "requires": [],
+  "optional": []
+}

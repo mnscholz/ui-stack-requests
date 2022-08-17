@@ -8,8 +8,7 @@ import Route from 'react-router-dom/Route';
 import RequestList from './routes/request-list';
 
 /*
-  STRIPES-NEW-APP
-  This is the main entry point into your new app.
+  This is the main entry point into our brand new testing app.
 */
 
 class StackRequests extends React.Component {

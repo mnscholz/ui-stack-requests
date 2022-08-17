@@ -1,5 +1,5 @@
 {
-  "name": "@folio/stack-requests",
+  "name": "@fauub/stack-requests",
   "version": "1.1.0",
   "description": "Display a list of unprocessed requests for a given stack and allow for changing processed status",
   "main": "src/index.js",
@@ -52,8 +52,7 @@
     "redux": "^4.1.2",
     "regenerator-runtime": "^0.13.3"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@folio/stripes": "^7.0.0",
     "react": "*",
@@ -67,11 +66,13 @@
     ],
     "displayName": "ui-stack-requests.meta.title",
     "route": "/stackrequests",
-    "icons": [{
-      "name": "app",
-      "alt": "Stack Requests",
-      "title": "Stack Requests"
-    }],
+    "icons": [
+      {
+        "name": "app",
+        "alt": "Stack Requests",
+        "title": "Stack Requests"
+      }
+    ],
     "okapiInterfaces": {},
     "permissionSets": [
       {
