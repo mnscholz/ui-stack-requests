@@ -1,10 +1,6 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
+import { Route, Switch } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
-import Switch from 'react-router-dom/Switch';
-import Route from 'react-router-dom/Route';
 import RequestList from './routes/request-list';
 
 /*
